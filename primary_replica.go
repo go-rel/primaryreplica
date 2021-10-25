@@ -2,7 +2,6 @@ package primaryreplica
 
 import (
 	"context"
-	"strings"
 	"sync/atomic"
 
 	"github.com/go-rel/rel"
@@ -44,7 +43,7 @@ func (pr *PrimaryReplica) Ping(ctx context.Context) error {
 }
 
 func (pr *PrimaryReplica) Aggregate(ctx context.Context, query rel.Query, mode string, field string) (int, error) {
-	return pr.readAdapter().Aggregate(ctx, query, mode, field)
+	return pr.readAdapter(query).Aggregate(ctx, query, mode, field)
 }
 
 func (pr *PrimaryReplica) Query(ctx context.Context, query rel.Query) (rel.Cursor, error) {
@@ -52,14 +51,10 @@ func (pr *PrimaryReplica) Query(ctx context.Context, query rel.Query) (rel.Curso
 		return pr.writeAdapter().Query(ctx, query)
 	}
 
-	return pr.readAdapter().Query(ctx, query)
+	return pr.readAdapter(query).Query(ctx, query)
 }
 
 func (pr *PrimaryReplica) Exec(ctx context.Context, stmt string, args []interface{}) (int64, int64, error) {
-	if len(stmt) > 6 && strings.EqualFold(stmt[:6], "SELECT") {
-		return pr.readAdapter().Exec(ctx, stmt, args)
-	}
-
 	return pr.writeAdapter().Exec(ctx, stmt, args)
 }
 
@@ -97,14 +92,16 @@ func (pr *PrimaryReplica) Rollback(ctx context.Context) error {
 	return pr.writeAdapter().Rollback(ctx)
 }
 
-func (pr *PrimaryReplica) readAdapter() rel.Adapter {
-	// TODO: support overwrite
-	return pr.primary
+func (pr *PrimaryReplica) readAdapter(query rel.Query) rel.Adapter {
+	if query.UsePrimaryDb {
+		return pr.primary
+	}
+
+	return pr.replicas[atomic.AddInt64(&pr.replicasPtr, 1)%pr.replicasLen]
 }
 
 func (pr *PrimaryReplica) writeAdapter() rel.Adapter {
-	// TODO: support overwrite
-	return pr.replicas[atomic.AddInt64(&pr.replicasPtr, 1)%pr.replicasLen]
+	return pr.primary
 }
 
 func New(primary rel.Adapter, replicas ...rel.Adapter) rel.Adapter {
