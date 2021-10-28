@@ -15,6 +15,7 @@ package main
 
 import (
 	"context"
+
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-rel/primaryreplica"
 	"github.com/go-rel/mysql"
