@@ -1,10 +1,10 @@
 # primaryreplica
 
 [![GoDoc](https://godoc.org/github.com/go-rel/primaryreplica?status.svg)](https://pkg.go.dev/github.com/go-rel/primaryreplica)
+[![Test](https://github.com/go-rel/primaryreplica/actions/workflows/test.yml/badge.svg)](https://github.com/go-rel/primaryreplica/actions/workflows/test.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/go-rel/primaryreplica)](https://goreportcard.com/report/github.com/go-rel/primaryreplica)
+[![codecov](https://codecov.io/gh/go-rel/primaryreplica/branch/master/graph/badge.svg?token=snplQW05GK)](https://codecov.io/gh/go-rel/primaryreplica)
 [![Gitter chat](https://badges.gitter.im/go-rel/rel.png)](https://gitter.im/go-rel/rel)
-<!-- [![Test](https://github.com/go-rel/mysql/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/go-rel/mysql/actions/workflows/test.yml) -->
-<!-- [![codecov](https://codecov.io/gh/go-rel/mysql/branch/main/graph/badge.svg?token=56qOCsVPJF)](https://codecov.io/gh/go-rel/mysql) -->
 
 Read Write separation for primary-replica topologies
 
