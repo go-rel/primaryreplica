@@ -21,7 +21,7 @@ func (na *nopAdapter) Ping(_ context.Context) error {
 	return na.retError
 }
 
-func (na *nopAdapter) Aggregate(_ context.Context, _ rel.Query, _ string, _ string) (int, error) {
+func (na *nopAdapter) Aggregate(_ context.Context, _ rel.Query, _, _ string) (int, error) {
 	return 0, na.retError
 }
 
