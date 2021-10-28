@@ -14,34 +14,34 @@ func (na *nopAdapter) Close() error {
 	return na.retError
 }
 
-func (na *nopAdapter) Instrumentation(instrumenter rel.Instrumenter) {
+func (na *nopAdapter) Instrumentation(_ rel.Instrumenter) {
 }
 
-func (na *nopAdapter) Ping(ctx context.Context) error {
+func (na *nopAdapter) Ping(_ context.Context) error {
 	return na.retError
 }
 
-func (na *nopAdapter) Aggregate(ctx context.Context, query rel.Query, mode string, field string) (int, error) {
+func (na *nopAdapter) Aggregate(_ context.Context, _ rel.Query, _ string, _ string) (int, error) {
 	return 0, na.retError
 }
 
-func (na *nopAdapter) Begin(ctx context.Context) (rel.Adapter, error) {
+func (na *nopAdapter) Begin(_ context.Context) (rel.Adapter, error) {
 	return na, na.retError
 }
 
-func (na *nopAdapter) Commit(ctx context.Context) error {
+func (na *nopAdapter) Commit(_ context.Context) error {
 	return na.retError
 }
 
-func (na *nopAdapter) Delete(ctx context.Context, query rel.Query) (int, error) {
+func (na *nopAdapter) Delete(_ context.Context, _ rel.Query) (int, error) {
 	return 1, na.retError
 }
 
-func (na *nopAdapter) Insert(ctx context.Context, query rel.Query, primaryField string, mutates map[string]rel.Mutate) (interface{}, error) {
+func (na *nopAdapter) Insert(_ context.Context, _ rel.Query, _ string, _ map[string]rel.Mutate) (interface{}, error) {
 	return 1, na.retError
 }
 
-func (na *nopAdapter) InsertAll(ctx context.Context, query rel.Query, primaryField string, fields []string, bulkMutates []map[string]rel.Mutate) ([]interface{}, error) {
+func (na *nopAdapter) InsertAll(_ context.Context, _ rel.Query, _ string, _ []string, bulkMutates []map[string]rel.Mutate) ([]interface{}, error) {
 	var (
 		ids = make([]interface{}, len(bulkMutates))
 	)
@@ -53,22 +53,22 @@ func (na *nopAdapter) InsertAll(ctx context.Context, query rel.Query, primaryFie
 	return ids, na.retError
 }
 
-func (na *nopAdapter) Query(ctx context.Context, query rel.Query) (rel.Cursor, error) {
+func (na *nopAdapter) Query(_ context.Context, _ rel.Query) (rel.Cursor, error) {
 	return nil, nil
 }
 
-func (na *nopAdapter) Rollback(ctx context.Context) error {
+func (na *nopAdapter) Rollback(_ context.Context) error {
 	return na.retError
 }
 
-func (na *nopAdapter) Update(ctx context.Context, query rel.Query, primaryField string, mutates map[string]rel.Mutate) (int, error) {
+func (na *nopAdapter) Update(_ context.Context, _ rel.Query, _ string, _ map[string]rel.Mutate) (int, error) {
 	return 1, na.retError
 }
 
-func (na *nopAdapter) Apply(ctx context.Context, migration rel.Migration) error {
+func (na *nopAdapter) Apply(_ context.Context, _ rel.Migration) error {
 	return na.retError
 }
 
-func (na *nopAdapter) Exec(ctx context.Context, stmt string, args []interface{}) (int64, int64, error) {
+func (na *nopAdapter) Exec(_ context.Context, _ string, _ []interface{}) (int64, int64, error) {
 	return 0, 0, na.retError
 }
