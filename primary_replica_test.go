@@ -68,13 +68,13 @@ func TestAdapter_Exec(t *testing.T) {
 
 func TestAdapter_Insert(t *testing.T) {
 	adapter := New(&nopAdapter{}, &nopAdapter{retError: errors.New("should not use replica")})
-	_, err := adapter.Insert(context.TODO(), rel.From("users"), "id", nil)
+	_, err := adapter.Insert(context.TODO(), rel.From("users"), "id", nil, rel.OnConflict{})
 	assert.Nil(t, err)
 }
 
 func TestAdapter_InsertAll(t *testing.T) {
 	adapter := New(&nopAdapter{}, &nopAdapter{retError: errors.New("should not use replica")})
-	_, err := adapter.InsertAll(context.TODO(), rel.From("users"), "id", nil, nil)
+	_, err := adapter.InsertAll(context.TODO(), rel.From("users"), "id", nil, nil, rel.OnConflict{})
 	assert.Nil(t, err)
 }
 
