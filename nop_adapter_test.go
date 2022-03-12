@@ -37,11 +37,11 @@ func (na *nopAdapter) Delete(_ context.Context, _ rel.Query) (int, error) {
 	return 1, na.retError
 }
 
-func (na *nopAdapter) Insert(_ context.Context, _ rel.Query, _ string, _ map[string]rel.Mutate) (interface{}, error) {
+func (na *nopAdapter) Insert(_ context.Context, _ rel.Query, _ string, _ map[string]rel.Mutate, _ rel.OnConflict) (interface{}, error) {
 	return 1, na.retError
 }
 
-func (na *nopAdapter) InsertAll(_ context.Context, _ rel.Query, _ string, _ []string, bulkMutates []map[string]rel.Mutate) ([]interface{}, error) {
+func (na *nopAdapter) InsertAll(_ context.Context, _ rel.Query, _ string, _ []string, bulkMutates []map[string]rel.Mutate, _ rel.OnConflict) ([]interface{}, error) {
 	var (
 		ids = make([]interface{}, len(bulkMutates))
 	)

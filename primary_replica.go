@@ -58,12 +58,12 @@ func (pr *PrimaryReplica) Exec(ctx context.Context, stmt string, args []interfac
 	return pr.writeAdapter().Exec(ctx, stmt, args)
 }
 
-func (pr *PrimaryReplica) Insert(ctx context.Context, query rel.Query, primaryField string, mutates map[string]rel.Mutate) (interface{}, error) {
-	return pr.writeAdapter().Insert(ctx, query, primaryField, mutates)
+func (pr *PrimaryReplica) Insert(ctx context.Context, query rel.Query, primaryField string, mutates map[string]rel.Mutate, onConflict rel.OnConflict) (interface{}, error) {
+	return pr.writeAdapter().Insert(ctx, query, primaryField, mutates, onConflict)
 }
 
-func (pr *PrimaryReplica) InsertAll(ctx context.Context, query rel.Query, primaryField string, fields []string, bulkMutates []map[string]rel.Mutate) ([]interface{}, error) {
-	return pr.writeAdapter().InsertAll(ctx, query, primaryField, fields, bulkMutates)
+func (pr *PrimaryReplica) InsertAll(ctx context.Context, query rel.Query, primaryField string, fields []string, bulkMutates []map[string]rel.Mutate, onConflict rel.OnConflict) ([]interface{}, error) {
+	return pr.writeAdapter().InsertAll(ctx, query, primaryField, fields, bulkMutates, onConflict)
 }
 
 func (pr *PrimaryReplica) Update(ctx context.Context, query rel.Query, primaryField string, mutates map[string]rel.Mutate) (int, error) {
