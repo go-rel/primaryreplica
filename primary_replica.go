@@ -48,48 +48,48 @@ func (pr *PrimaryReplica) Aggregate(ctx context.Context, query rel.Query, mode s
 
 func (pr *PrimaryReplica) Query(ctx context.Context, query rel.Query) (rel.Cursor, error) {
 	if query.LockQuery != "" {
-		return pr.writeAdapter().Query(ctx, query)
+		return pr.WriteAdapter().Query(ctx, query)
 	}
 
 	return pr.readAdapter(query).Query(ctx, query)
 }
 
 func (pr *PrimaryReplica) Exec(ctx context.Context, stmt string, args []interface{}) (int64, int64, error) {
-	return pr.writeAdapter().Exec(ctx, stmt, args)
+	return pr.WriteAdapter().Exec(ctx, stmt, args)
 }
 
 func (pr *PrimaryReplica) Insert(ctx context.Context, query rel.Query, primaryField string, mutates map[string]rel.Mutate, onConflict rel.OnConflict) (interface{}, error) {
-	return pr.writeAdapter().Insert(ctx, query, primaryField, mutates, onConflict)
+	return pr.WriteAdapter().Insert(ctx, query, primaryField, mutates, onConflict)
 }
 
 func (pr *PrimaryReplica) InsertAll(ctx context.Context, query rel.Query, primaryField string, fields []string, bulkMutates []map[string]rel.Mutate, onConflict rel.OnConflict) ([]interface{}, error) {
-	return pr.writeAdapter().InsertAll(ctx, query, primaryField, fields, bulkMutates, onConflict)
+	return pr.WriteAdapter().InsertAll(ctx, query, primaryField, fields, bulkMutates, onConflict)
 }
 
 func (pr *PrimaryReplica) Update(ctx context.Context, query rel.Query, primaryField string, mutates map[string]rel.Mutate) (int, error) {
-	return pr.writeAdapter().Update(ctx, query, primaryField, mutates)
+	return pr.WriteAdapter().Update(ctx, query, primaryField, mutates)
 }
 
 func (pr *PrimaryReplica) Delete(ctx context.Context, query rel.Query) (int, error) {
-	return pr.writeAdapter().Delete(ctx, query)
+	return pr.WriteAdapter().Delete(ctx, query)
 }
 
 func (pr *PrimaryReplica) Apply(ctx context.Context, migration rel.Migration) error {
-	return pr.writeAdapter().Apply(ctx, migration)
+	return pr.WriteAdapter().Apply(ctx, migration)
 }
 
 func (pr *PrimaryReplica) Begin(ctx context.Context) (rel.Adapter, error) {
-	return pr.writeAdapter().Begin(ctx)
+	return pr.WriteAdapter().Begin(ctx)
 }
 
 func (pr *PrimaryReplica) Commit(ctx context.Context) error {
 	// this line shouldn't be accessible because transaction doesn't use this adapter
-	return pr.writeAdapter().Commit(ctx)
+	return pr.WriteAdapter().Commit(ctx)
 }
 
 func (pr *PrimaryReplica) Rollback(ctx context.Context) error {
 	// this line shouldn't be accessible because transaction doesn't use this adapter
-	return pr.writeAdapter().Rollback(ctx)
+	return pr.WriteAdapter().Rollback(ctx)
 }
 
 func (pr *PrimaryReplica) readAdapter(query rel.Query) rel.Adapter {
@@ -100,7 +100,7 @@ func (pr *PrimaryReplica) readAdapter(query rel.Query) rel.Adapter {
 	return pr.replicas[atomic.AddInt64(&pr.replicasPtr, 1)%pr.replicasLen]
 }
 
-func (pr *PrimaryReplica) writeAdapter() rel.Adapter {
+func (pr *PrimaryReplica) WriteAdapter() rel.Adapter {
 	return pr.primary
 }
 
