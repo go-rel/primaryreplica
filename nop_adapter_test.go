@@ -10,6 +10,10 @@ type nopAdapter struct {
 	retError error
 }
 
+func (nopAdapter) Name() string {
+	return "nop"
+}
+
 func (na *nopAdapter) Close() error {
 	return na.retError
 }
@@ -42,9 +46,7 @@ func (na *nopAdapter) Insert(_ context.Context, _ rel.Query, _ string, _ map[str
 }
 
 func (na *nopAdapter) InsertAll(_ context.Context, _ rel.Query, _ string, _ []string, bulkMutates []map[string]rel.Mutate, _ rel.OnConflict) ([]interface{}, error) {
-	var (
-		ids = make([]interface{}, len(bulkMutates))
-	)
+	ids := make([]interface{}, len(bulkMutates))
 
 	for i := range bulkMutates {
 		ids[i] = i + 1

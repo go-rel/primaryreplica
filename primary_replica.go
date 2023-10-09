@@ -14,6 +14,10 @@ type PrimaryReplica struct {
 	replicasLen int64
 }
 
+func (pr *PrimaryReplica) Name() string {
+	return pr.primary.Name()
+}
+
 func (pr *PrimaryReplica) Close() error {
 	for i := range pr.replicas {
 		if err := pr.replicas[i].Close(); err != nil {

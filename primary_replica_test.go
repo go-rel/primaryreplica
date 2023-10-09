@@ -9,6 +9,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestAdapter_Name(t *testing.T) {
+	adapter := New(&nopAdapter{}, &nopAdapter{})
+	assert.Equal(t, "nop", adapter.Name())
+}
+
 func TestAdapter_Close(t *testing.T) {
 	adapter := New(&nopAdapter{}, &nopAdapter{})
 	assert.Nil(t, adapter.Close())
